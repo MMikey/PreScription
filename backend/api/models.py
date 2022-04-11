@@ -7,7 +7,8 @@ class Translation(models.Model):
     
     sql_statement = models.CharField(
         max_length=100,
-        editable=False
+        editable=False,
+        default='sql statement'
         )
 
     created = models.DateTimeField(auto_now=True)
