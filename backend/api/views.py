@@ -7,4 +7,5 @@ from .models import Translation
 
 class TranslationView(viewsets.ModelViewSet):
     serializer_class = TranslationSerializer
+    Translation.sql_statement = 'select *'
     queryset = Translation.objects.all()

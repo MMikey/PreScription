@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
+import HomeStackScreen from './navigation/HomeStackScreen'
 
 const Tab = createBottomTabNavigator()
 
