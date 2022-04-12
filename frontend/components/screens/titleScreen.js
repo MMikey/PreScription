@@ -75,7 +75,7 @@ class TitleScreen extends Component {
           ListEmptyComponent={<Text>No questions to display</Text>}
           data={this.state.results}
           renderItem={({ item }) => (
-            <View> <Text>{item.sql_statement}</Text> </View>
+            <Text>{item.nl_question}</Text> 
           )}
         />
       </View>
