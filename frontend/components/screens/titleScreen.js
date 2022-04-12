@@ -49,10 +49,14 @@ class TitleScreen extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state.nlQuery)
+      body: JSON.stringify({'nl_question':this.state.nlQuery})
     })
       .then((response) => {
+        console.log(JSON.stringify(this.state))
         this.showQuestions()
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }
 
@@ -65,10 +69,10 @@ class TitleScreen extends Component {
           placeholder='Question'
           onChangeText={(nlQuery) => this.setState({ nlQuery })}
           onSubmitEditing={() => this.postQuestion()}
-          ListEmptyComponent={<Text>No questions to display</Text>}
           value={this.state.nlQuery}
         />
         <FlatList
+          ListEmptyComponent={<Text>No questions to display</Text>}
           data={this.state.results}
           renderItem={({ item }) => (
             <View> <Text>{item.sql_statement}</Text> </View>
