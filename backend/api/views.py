@@ -19,19 +19,33 @@ class TranslationView(viewsets.ModelViewSet):
     queryset = Translation.objects.all()
 
     def create(self, request):
-        return self.remove_stopwords(request)
+        request = self.remove_stopwords(request)
+
+        obj, created = self.queryset.get_or_create(
+            nl_question=request.data['nl_question'],
+            defaults={'sql_statement': 'select *'}
+        )
+        if(created):
+            print('wow')
+        
+        return request
 
     def remove_stopwords(self, request):
  
-        question = request.data['nl_question']
-        question_tokens = word_tokenize(question)
+        nl_statement = request.data['nl_question']
+        statement_tokens = word_tokenize(nl_statement)
 
-        tokens_without_sw = [word for word in question_tokens if not word in stopwords.words()]
+        tokens_without_sw = [word for word in statement_tokens if not word in stopwords.words()]
 
-        request.data['nl_question'] = tokens_without_sw
+        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(tokens_without_sw)
 
         handler500 = 'error'
-        return Response({'nl_question':TreebankWordDetokenizer().detokenize(request.data['nl_question'])})
+        return Response(request.data)
+
+    def identify_keywords(self, request):
+        nl_statement = request.data['nl_question']
+        statement_tokens = word_tokenize(nl_statement)
+        
 
 
 
