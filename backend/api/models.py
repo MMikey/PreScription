@@ -14,3 +14,4 @@ class Translation(models.Model):
     created = models.DateTimeField(auto_now=True)
 
 
+

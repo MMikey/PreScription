@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { main, response, questionInput } from '../../styles/mainStyle'
 
 class TitleScreen extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class TitleScreen extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'nl_question':this.state.nlQuery})
+      body: JSON.stringify({ 'nl_question': this.state.nlQuery })
     })
       .then((response) => {
         console.log(JSON.stringify(this.state))
@@ -64,20 +65,40 @@ class TitleScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={main.container}>
+        <View style={questionInput.container}>
         <TextInput
           placeholder='Question'
+          style={questionInput.input}
           onChangeText={(nlQuery) => this.setState({ nlQuery })}
           onSubmitEditing={() => this.postQuestion()}
           value={this.state.nlQuery}
-        />
-        <FlatList
-          ListEmptyComponent={<Text>No questions to display</Text>}
-          data={this.state.results}
-          renderItem={({ item }) => (
-            <Text>{item.nl_question}</Text> 
-          )}
-        />
+          />
+          </View>
+        <View style={response.container}>
+        <View style={response.row}>
+                <Text style={response.tableHeader}>
+                  Question
+                </Text>
+                <Text style={response.tableHeader}>
+                  Translated SQL
+                </Text>
+              </View>
+          <FlatList
+            ListEmptyComponent={<Text style={response.item}>No questions to display</Text>}
+            data={this.state.results}
+            renderItem={({ item }) => (
+              <View style={response.row}>
+                <Text style={response.item}>
+                  {item.nl_question}
+                </Text>
+                <Text style={response.item}>
+                  {item.sql_statement}
+                </Text>
+              </View>
+            )}
+          />
+        </View>
       </View>
     )
   }
