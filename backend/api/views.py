@@ -7,15 +7,13 @@ from .serializers import TranslationSerializer
 from django.db import IntegrityError, transaction
 
 from .models import Translation
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, PlaintextCorpusReader
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.treebank import TreebankWordDetokenizer
-import nltk.data
 
 import logging
 from django.core.exceptions import * 
 
-from nlidb.views import *
 # Create your views here.
 
 class TranslationView(viewsets.ModelViewSet):
@@ -54,12 +52,18 @@ class TranslationView(viewsets.ModelViewSet):
     def identify_keywords(self, request):
         nl_statement = request.data['nl_question']
         statement_tokens = word_tokenize(nl_statement)
-
-        tokenizer = nltk.data.load('./keywords/table_names')
         
-        tokens_without_kw = [word for word in statement_tokens if not word in tokenizer.tokenize()]
+        corpus_root  = './api/keywords'
 
-        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(tokens_without_kw)
+        filelists = PlaintextCorpusReader(corpus_root, '.*')
+
+        filelists.fileids()
+
+        table_names = filelists.words('table_names.txt')
+
+        kw_tokens = [word for word in statement_tokens if word in table_names]
+
+        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(kw_tokens)
 
         return Response(request.data)
         
