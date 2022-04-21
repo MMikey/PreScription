@@ -1,13 +1,19 @@
 const COLORS = {
-    primary: '#111365',
-    secondary: '#3B317C',
+    primaryBG: '#FFFFFF',
+    secondaryContainerBG: '#F6F6F6',
     background: '#B3D7DF',
-    button: '#83B8c7',
-    container: '#347690'
+    border: '#D6D9DC',
+    container: '#F8F9F9'
 }
 
 const FONTS = {
     primary: 'Courier New'
 }
 
-export { COLORS, FONTS }
+const BORDER = {
+    borderWidth:1,
+    borderColor:COLORS.border,
+    borderRadius:5
+}
+
+export { COLORS, FONTS, BORDER }

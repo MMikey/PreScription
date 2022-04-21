@@ -67,23 +67,23 @@ class TitleScreen extends Component {
     return (
       <View style={main.container}>
         <View style={questionInput.container}>
-        <TextInput
-          placeholder='Question'
-          style={questionInput.input}
-          onChangeText={(nlQuery) => this.setState({ nlQuery })}
-          onSubmitEditing={() => this.postQuestion()}
-          value={this.state.nlQuery}
+          <TextInput
+            placeholder='Question'
+            style={questionInput.input}
+            onChangeText={(nlQuery) => this.setState({ nlQuery })}
+            onSubmitEditing={() => this.postQuestion()}
+            value={this.state.nlQuery}
           />
-          </View>
+        </View>
         <View style={response.container}>
-        <View style={response.row}>
-                <Text style={response.tableHeader}>
-                  Question
-                </Text>
-                <Text style={response.tableHeader}>
-                  Translated SQL
-                </Text>
-              </View>
+          <View style={response.row}>
+            <Text style={response.itemHeader}>
+              Question
+            </Text>
+            <Text style={response.itemHeader}>
+              Translated SQL
+            </Text>
+          </View>
           <FlatList
             ListEmptyComponent={<Text style={response.item}>No questions to display</Text>}
             data={this.state.results}
