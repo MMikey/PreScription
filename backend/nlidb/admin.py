@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MedicalStaff, Patients, Appointments, Treatments
+from .models import MedicalStaff, Patient, Appointment, Treatment
 # Register your models here.
 
 class MedicalStaffAdmin(admin.ModelAdmin):
@@ -8,15 +8,15 @@ class MedicalStaffAdmin(admin.ModelAdmin):
 class PatientsAdmin(admin.ModelAdmin):
     list_display = ('patient_id','name', 'DOB', 'NHS_num', 'BMI', 'admitted')
 
-class AppointmentsAdmin(admin.ModelAdmin):
+class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('patient', 'staff', 'description', 'date_time')
 
-class TreatmentsAdmin(admin.ModelAdmin):
+class TreatmentAdmin(admin.ModelAdmin):
     list_display = ('patient', 'staff', 'cost', 'description')
 
 
 admin.site.register(MedicalStaff, MedicalStaffAdmin)
-admin.site.register(Patients, PatientsAdmin)
-admin.site.register(Appointments, AppointmentsAdmin)
-admin.site.register(Treatments, TreatmentsAdmin)
+admin.site.register(Patient, PatientsAdmin)
+admin.site.register(Appointment, AppointmentAdmin)
+admin.site.register(Treatment, TreatmentAdmin)
 

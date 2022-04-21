@@ -13,6 +13,8 @@ from nltk.tokenize.treebank import TreebankWordDetokenizer
 
 import logging
 from django.core.exceptions import * 
+
+import backend.nlidb.models as nMs
 # Create your views here.
 
 class TranslationView(viewsets.ModelViewSet):
@@ -48,6 +50,7 @@ class TranslationView(viewsets.ModelViewSet):
         return Response(request.data)
 
     def identify_keywords(self, request):
+        
         pass
         
         
