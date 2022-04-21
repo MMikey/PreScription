@@ -4,17 +4,18 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from .serializers import TranslationSerializer
-from .models import Translation
 from django.db import IntegrityError, transaction
 
+from .models import Translation
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.treebank import TreebankWordDetokenizer
+import nltk.data
 
 import logging
 from django.core.exceptions import * 
 
-import backend.nlidb.models as nMs
+from nlidb.views import *
 # Create your views here.
 
 class TranslationView(viewsets.ModelViewSet):
@@ -25,6 +26,7 @@ class TranslationView(viewsets.ModelViewSet):
 
     def create(self, request):
         request = self.remove_stopwords(request)
+        request = self.identify_keywords(request)
 
         obj, created = self.queryset.get_or_create(
             nl_question=request.data['nl_question'],
@@ -50,8 +52,16 @@ class TranslationView(viewsets.ModelViewSet):
         return Response(request.data)
 
     def identify_keywords(self, request):
+        nl_statement = request.data['nl_question']
+        statement_tokens = word_tokenize(nl_statement)
+
+        tokenizer = nltk.data.load('./keywords/table_names')
         
-        pass
+        tokens_without_kw = [word for word in statement_tokens if not word in tokenizer.tokenize()]
+
+        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(tokens_without_kw)
+
+        return Response(request.data)
         
         
 
