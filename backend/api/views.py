@@ -7,6 +7,7 @@ from .serializers import TranslationSerializer
 from django.db import IntegrityError, transaction
 
 from .models import Translation
+
 from nltk.corpus import stopwords, PlaintextCorpusReader
 from nltk.tokenize import word_tokenize
 from nltk.tokenize.treebank import TreebankWordDetokenizer
@@ -44,7 +45,7 @@ class TranslationView(viewsets.ModelViewSet):
 
         tokens_without_sw = [word for word in statement_tokens if not word in stopwords.words()]
 
-        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(tokens_without_sw)
+        request.data['translated_statement'] = TreebankWordDetokenizer().detokenize(tokens_without_sw)
 
         handler500 = 'error'
         return Response(request.data)
@@ -63,7 +64,7 @@ class TranslationView(viewsets.ModelViewSet):
 
         kw_tokens = [word for word in statement_tokens if word in table_names]
 
-        request.data['nl_question'] = TreebankWordDetokenizer().detokenize(kw_tokens)
+        request.data['translated_st'] = TreebankWordDetokenizer().detokenize(kw_tokens)
 
         return Response(request.data)
         

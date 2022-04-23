@@ -93,6 +93,9 @@ class TitleScreen extends Component {
                   {item.nl_question}
                 </Text>
                 <Text style={response.item}>
+                  {item.translated_statement}
+                  </Text>
+                <Text style={response.item}>
                   {item.sql_statement}
                 </Text>
               </View>
