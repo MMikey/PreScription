@@ -1,8 +1,9 @@
 from urllib import response
 from django.shortcuts import render
-from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated  
 from .serializers import TranslationSerializer
 from django.db import IntegrityError, transaction
 
@@ -20,10 +21,11 @@ from django.core.exceptions import *
 class TranslationView(viewsets.ModelViewSet):
     serializer_class = TranslationSerializer
     queryset = Translation.objects.all()
-
+    permission_classes = (IsAuthenticated,)
     logger = logging.getLogger(__name__)
 
     def create(self, request):
+
         request = self.remove_stopwords(request)
         request = self.identify_keywords(request)
 
