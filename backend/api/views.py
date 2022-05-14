@@ -29,12 +29,12 @@ class TranslationView(viewsets.ModelViewSet):
         request = self.remove_stopwords(request)
         request = self.identify_keywords(request)
 
-        obj, created = self.queryset.get_or_create(
+        obj, created = Translation.objects.get_or_create(
             nl_question=request.data['nl_question'],
             translated_statement=request.data['translated_statement'],
             defaults={'sql_statement': ''}  
         )
-        if (created):
+        if (not created):
             self.logger.info('Created new question')
             return Response(request.data)
         else: 
