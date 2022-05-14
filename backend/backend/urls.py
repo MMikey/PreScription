@@ -24,4 +24,5 @@ router.register(r'questions', views.TranslationView, 'Translation')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('users/login', login)
 ]
