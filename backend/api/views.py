@@ -21,7 +21,7 @@ from django.core.exceptions import *
 class TranslationView(viewsets.ModelViewSet):
     serializer_class = TranslationSerializer
     queryset = Translation.objects.all()
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     logger = logging.getLogger(__name__)
 
     def create(self, request):
@@ -31,6 +31,7 @@ class TranslationView(viewsets.ModelViewSet):
 
         obj, created = self.queryset.get_or_create(
             nl_question=request.data['nl_question'],
+            translated_statement=request.data['translated_statement'],
             defaults={'sql_statement': ''}  
         )
         if (created):
@@ -40,6 +41,9 @@ class TranslationView(viewsets.ModelViewSet):
             serializer = TranslationSerializer(obj)
             return Response(serializer.data)
 
+    def read(self,request):
+        pass
+
     def remove_stopwords(self, request):
  
         nl_statement = request.data['nl_question']
@@ -48,7 +52,8 @@ class TranslationView(viewsets.ModelViewSet):
         tokens_without_sw = [word for word in statement_tokens if not word in stopwords.words()]
 
         request.data['translated_statement'] = TreebankWordDetokenizer().detokenize(tokens_without_sw)
-
+        
+        print(request.data['translated_statement'])
         handler500 = 'error'
         return Response(request.data)
 
@@ -62,15 +67,15 @@ class TranslationView(viewsets.ModelViewSet):
 
         filelists.fileids()
 
-        table_names = filelists.words('table_names.txt')
+        table_names = filelists.words('keywords.txt')
 
         kw_tokens = [word for word in statement_tokens if word in table_names]
 
-        request.data['translated_st'] = TreebankWordDetokenizer().detokenize(kw_tokens)
+        request.data['translated_statement'] = TreebankWordDetokenizer().detokenize(kw_tokens)
+
+        print(request.data['translated_statement'])
 
         return Response(request.data)
-        
-        
 
 
 

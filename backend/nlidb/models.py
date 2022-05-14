@@ -16,7 +16,7 @@ class Patient(models.Model):
     NHS_num = models.IntegerField()
     BMI = models.IntegerField()
     admitted = models.BooleanField()
-    location_admitted = models.CharField(max_length=200)
+    ward_admitted = models.CharField(max_length=200,  blank=True, null=True)
 
 class Appointment(models.Model):
     class Meta:
