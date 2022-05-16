@@ -1,6 +1,5 @@
 from urllib import response
 from django.shortcuts import render
-from html5lib import serialize
 from rest_framework.response import Response
 from rest_framework import viewsets
 
@@ -17,7 +16,6 @@ class MedicalStaffView(viewsets.ModelViewSet):
 class PatientView(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
-
 
 class AppointmentView(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
