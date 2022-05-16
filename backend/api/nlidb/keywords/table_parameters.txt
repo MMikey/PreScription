@@ -1,0 +1,10 @@
+    patient_id
+    name
+    DOB
+    NHS_num
+    BMI
+    admitted
+    ward_admitted
+
+
+

@@ -7,6 +7,8 @@ from nltk.tokenize.treebank import TreebankWordDetokenizer
 class ProcessRequest():
     def __init__(self, request):
         self.__request__ = request
+        self.keywords = {'table_names': [],
+                        'table_parameters': []}
 
     def process(self):
         # First discard all stopwords from the question
@@ -37,8 +39,16 @@ class ProcessRequest():
 
         filelists.fileids()
 
-        table_names = filelists.words('keywords.txt')
+        table_names = filelists.words('table_names.txt')
+        param_names = filelists.words('table_paramaters.txt')
 
-        kw_tokens = [word for word in statement_tokens if word in table_names]
+        tn_tokens = [word for word in statement_tokens if word in table_names]
 
-        self.__request__.data['translated_statement'] = TreebankWordDetokenizer().detokenize(kw_tokens)
+        pn_tokens = [word for word in statement_tokens if word in param_names]
+
+        self.keywords['table_names'].append(TreebankWordDetokenizer().detokenize(tn_tokens))
+        self.keywords['table_parameters'].append(TreebankWordDetokenizer().detokenize(pn_tokens))
+
+    def construct_sql(self):
+        
+
