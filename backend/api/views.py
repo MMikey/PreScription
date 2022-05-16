@@ -27,10 +27,11 @@ class TranslationView(viewsets.ModelViewSet):
         request = question_translator.process()
 
         obj, created = Translation.objects.get_or_create(
-            nl_question=request.data['nl_question'],
+            nl_question=request.data['utterance'],
             translated_statement=request.data['translated_statement'],
-            defaults={'sql_statement': ''}  
+            sql_statement=request.data['sql_statement']
         )
+
         if (not created):
             return Response(request.data)
         else: 
@@ -38,8 +39,11 @@ class TranslationView(viewsets.ModelViewSet):
             serializer = TranslationSerializer(obj)
             return Response(serializer.data)
 
-    def read(self,request):
-        pass
+    def list(self, request):
+        sql_query = Translation.objects.last()
+
+        print(sql_query.__getattribute__('sql_statement'))
+        return Translation.objects.raw(sql_query)
 
 
 

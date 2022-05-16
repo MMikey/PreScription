@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Translation(models.Model):
-    nl_question = models.CharField(
+    utterance = models.CharField(
         max_length=1000
         )
 

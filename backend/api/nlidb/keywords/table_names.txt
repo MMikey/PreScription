@@ -1,0 +1,9 @@
+appointment
+appointments
+staff
+doctor
+nurse
+patient
+patients
+treatment
+treatments
