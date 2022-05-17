@@ -1,4 +1,5 @@
-from .nlidb.processrequest import ProcessRequest
+from django.shortcuts import get_object_or_404
+from .nlidb.KWEncoder import KWEncoder
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -20,30 +21,32 @@ class TranslationView(viewsets.ModelViewSet):
     serializer_class = TranslationSerializer
     queryset = Translation.objects.all()
     logger = logging.getLogger(__name__)
-
+    
     def create(self, request):
-        question_translator = ProcessRequest(request=request)
+        question_translator = KWEncoder(request)
 
         request = question_translator.process()
 
         obj, created = Translation.objects.get_or_create(
-            nl_question=request.data['utterance'],
-            translated_statement=request.data['translated_statement'],
-            sql_statement=request.data['sql_statement']
+            utterance=request.data['utterance'],
+            sql_query=request.data['sql_query']
         )
 
-        if (not created):
-            return Response(request.data)
-        else: 
+        if created:
             self.logger.info('Created new question')
-            serializer = TranslationSerializer(obj)
-            return Response(serializer.data)
 
-    def list(self, request):
-        sql_query = Translation.objects.last()
+        serializer = TranslationSerializer(obj)
+        return Response(serializer.data)
 
-        print(sql_query.__getattribute__('sql_statement'))
-        return Translation.objects.raw(sql_query)
+    def retrieve(self, request, pk=None):
+        obj = get_object_or_404(self.queryset, pk=pk)
+
+        query = obj.__getattribute__('sql_query')
+
+        print(Translation.objects.raw(query))
+        
+        serializer = TranslationSerializer(obj)
+        return Response(serializer.data) 
 
 
 
