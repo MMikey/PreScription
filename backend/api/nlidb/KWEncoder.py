@@ -48,10 +48,11 @@ class KWEncoder(UtteranceEncoder):
 
 
     def construct_sql(self) -> None:
-        op = self.__query_semantics__['operator']
-
         if (self.__query_semantics__['table_name'][-1] ==  's'):
             self.__query_semantics__['table_name'] = self.__query_semantics__['table_name'][:-1]
+            
+        op = self.__query_semantics__['operator']
+
 
         tn = 'nlidb_' + self.__query_semantics__['table_name'].lower()
         cp = self.__query_semantics__['conditional']

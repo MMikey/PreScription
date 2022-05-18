@@ -23,15 +23,21 @@ class TitleScreen extends Component {
   }
 
   showQuestions = async () => {
-    
-    return fetch('http://localhost:8000/api/questions', {
+    const value = await AsyncStorage.getItem('@session_token')
+
+    return fetch('http://localhost:8000/api/question', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + value,
       }
     })
       .then((response) => {
-        return response.json()
+        if (response.status === 200){
+          return response.json()
+        } else if (response.status === 401){
+          this.props.navigation.navigate('Login')
+        }
       })
       .then((responseJson) => {
         this.setState({
@@ -45,16 +51,17 @@ class TitleScreen extends Component {
 
   postQuestion = async () => {
 
-    return fetch('http://localhost:8000/api/questions/', {
+    return fetch('http://localhost:8000/api/question/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 'nl_question': this.state.nlQuery })
+      body: JSON.stringify({ 'utterance': this.state.nlQuery })
     })
       .then((response) => {
-        console.log(JSON.stringify(this.state))
-        this.showQuestions()
+        if (response.status === 401) {
+          this.props.navigation('Login')
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -90,13 +97,10 @@ class TitleScreen extends Component {
             renderItem={({ item }) => (
               <View style={response.row}>
                 <Text style={response.item}>
-                  {item.nl_question}
+                  {item.utterance}
                 </Text>
                 <Text style={response.item}>
-                  {item.translated_statement}
-                  </Text>
-                <Text style={response.item}>
-                  {item.sql_statement}
+                  {item.sql_query}
                 </Text>
               </View>
             )}
