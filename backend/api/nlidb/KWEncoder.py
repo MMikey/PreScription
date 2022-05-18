@@ -46,7 +46,11 @@ class KWEncoder(UtteranceEncoder):
 
     def construct_sql(self):
         op = self.__query_semantics__['operator']
-        tn = self.__query_semantics__['table_name'].capitalize()
+
+        if (self.__query_semantics__['table_name'][-1] ==  's'):
+            self.__query_semantics__['table_name'] = self.__query_semantics__['table_name'][:-1]
+
+        tn = 'nlidb_' + self.__query_semantics__['table_name'].lower()
         cp = self.__query_semantics__['conditional']
 
         self.__request__.data['sql_query'] = f'SELECT {op} FROM {tn} WHERE {cp} = 1'

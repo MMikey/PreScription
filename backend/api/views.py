@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 
 from .serializers import TranslationSerializer
 from .models import Translation
-from .nlidb import DatabaseQuery
+from .nlidb.DatabaseQuery import DatabaseQuery
 
 import logging
 from django.core.exceptions import * 
@@ -39,8 +39,11 @@ class TranslationView(viewsets.ModelViewSet):
         obj = get_object_or_404(self.queryset, pk=pk)
         query = obj.__getattribute__('sql_query')
 
-        dbq = DatabaseQuery(query, )
-        return dbq.query()
+        dbq = DatabaseQuery(query)
+        dbq.query()
+
+        
+        return 
 
 
 
