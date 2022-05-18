@@ -7,10 +7,7 @@ from rest_framework.decorators import action
 
 from .serializers import TranslationSerializer
 from .models import Translation
-
-from nltk.corpus import stopwords, PlaintextCorpusReader
-from nltk.tokenize import word_tokenize
-from nltk.tokenize.treebank import TreebankWordDetokenizer
+from .nlidb import DatabaseQuery
 
 import logging
 from django.core.exceptions import * 
@@ -40,13 +37,10 @@ class TranslationView(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         obj = get_object_or_404(self.queryset, pk=pk)
-
         query = obj.__getattribute__('sql_query')
 
-        print(Translation.objects.raw(query))
-        
-        serializer = TranslationSerializer(obj)
-        return Response(serializer.data) 
+        dbq = DatabaseQuery(query, )
+        return dbq.query()
 
 
 
