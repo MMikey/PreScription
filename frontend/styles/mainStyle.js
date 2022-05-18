@@ -4,7 +4,7 @@ import { COLORS, BORDER } from "./common";
 const main = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:COLORS.primaryBG
+        backgroundColor:COLORS.primaryFG
     },
 
     response:{
@@ -13,9 +13,15 @@ const main = StyleSheet.create({
     }
 })
 
+const header = StyleSheet.create({
+    container: {
+        backgroundColor:COLORS.primary
+    }
+})
+
 const questionInput = StyleSheet.create({
     container : {
-        backgroundColor:COLORS.container,
+        backgroundColor:COLORS.secondary,
         alignSelf:'center',
         padding: 1,
         margin:6,
@@ -26,7 +32,7 @@ const questionInput = StyleSheet.create({
     },
 
     input : {
-        backgroundColor:COLORS.container,
+        backgroundColor:COLORS.primaryFG,
         alignSelf:'center',
         textAlign:'center',
         padding: 1,
@@ -41,7 +47,7 @@ const response = StyleSheet.create({
         flex:1,
         alignContent: 'center',
         padding:5,
-        backgroundColor: COLORS.primaryBG
+        backgroundColor: COLORS.primary
     },
 
     row : {
@@ -50,7 +56,7 @@ const response = StyleSheet.create({
     },
 
     item : {
-        backgroundColor:COLORS.secondaryContainerBG,
+        backgroundColor:COLORS.secondary,
         flex:1,
         minWidth:'40%', 
         fontSize:20,
@@ -67,7 +73,7 @@ const response = StyleSheet.create({
     },
 
     itemHeader: {
-        backgroundColor:COLORS.container,
+        backgroundColor:COLORS.primary,
         flex:1,
         minWidth:'40%', 
         fontSize:25,

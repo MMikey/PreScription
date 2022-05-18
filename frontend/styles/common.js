@@ -1,8 +1,9 @@
 const COLORS = {
-    primaryBG: '#FFFFFF',
-    secondaryContainerBG: '#F6F6F6',
+    primary: '#79AEC8',
+    secondary: '#417690',
     background: '#B3D7DF',
-    border: '#D6D9DC',
+    primaryFG: '#FFF',
+    border: '#CCC',
     container: '#F8F9F9'
 }
 
