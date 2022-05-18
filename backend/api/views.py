@@ -40,10 +40,11 @@ class TranslationView(viewsets.ModelViewSet):
         query = obj.__getattribute__('sql_query')
 
         dbq = DatabaseQuery(query)
-        dbq.query()
-
         
-        return 
+        results_dict = dbq.query()
+
+        return results_dict
+    
 
 
 

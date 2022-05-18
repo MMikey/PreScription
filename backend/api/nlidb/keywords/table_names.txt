@@ -1,5 +1,6 @@
 appointment
 appointments
+medicalstaff
 staff
 doctor
 nurse

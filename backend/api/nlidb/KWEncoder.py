@@ -15,27 +15,31 @@ class KWEncoder(UtteranceEncoder):
                                 'conditional': ''
                                 }
         
-    def process(self):
-        # First discard all stopwords from the question
+    def process(self) -> Response:
+    #
+    # Main function of method 
+    #
         UtteranceEncoder.remove_stopwords(self)
 
-        # next get array of all keywords
         self.identify_keywords()
 
         self.construct_sql()
 
         return Response(self.__request__.data)
 
-    
-    def identify_keywords(self):
-        statement_tokens = word_tokenize(self.__request__.data['utterance'])
-        
+
+    def identify_keywords(self) -> None:
+    #
+    # Extracts table name and table parameters from utterance
+    #   
         corpus_root  = './api/nlidb/keywords'
         filelists = PlaintextCorpusReader(corpus_root, '.*')
         filelists.fileids()
 
         table_names = filelists.words('table_names.txt')
         param_names = filelists.words('table_parameters.txt')
+        
+        statement_tokens = word_tokenize(self.__request__.data['utterance'])
 
         tn_tokens = [word for word in statement_tokens if word in table_names]
         pn_tokens = [word for word in statement_tokens if word in param_names]
@@ -44,7 +48,10 @@ class KWEncoder(UtteranceEncoder):
         self.__query_semantics__['conditional'] = TreebankWordDetokenizer().detokenize(pn_tokens)
 
 
-    def construct_sql(self):
+    def construct_sql(self) -> None:
+    #
+    #
+    #
         op = self.__query_semantics__['operator']
 
         if (self.__query_semantics__['table_name'][-1] ==  's'):

@@ -5,6 +5,7 @@
     BMI
     admitted
     ward_admitted
+    is_working
 
 
 
