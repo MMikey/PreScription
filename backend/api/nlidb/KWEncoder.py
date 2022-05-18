@@ -27,7 +27,6 @@ class KWEncoder(UtteranceEncoder):
 
         return Response(self.__request__.data)
 
-
     def identify_keywords(self) -> None:
     #
     # Extracts table name and table parameters from utterance
@@ -49,9 +48,6 @@ class KWEncoder(UtteranceEncoder):
 
 
     def construct_sql(self) -> None:
-    #
-    #
-    #
         op = self.__query_semantics__['operator']
 
         if (self.__query_semantics__['table_name'][-1] ==  's'):
