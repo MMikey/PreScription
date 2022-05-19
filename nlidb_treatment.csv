@@ -1,0 +1,6 @@
+cost,description,patient_id,staff_id
+90.0,iv line,1,15
+100.0,cast,2,11
+10.0,meal plan,8,19
+1000.0,physical rehabililitation,9,15
+20.0,stiches,10,12

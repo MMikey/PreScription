@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .router import user_router, api_router
+from api.routers import user_router, api_router
 from rest_framework.authtoken import views
 from api.nlidb import TableDataLoader as tdl
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(api_router.urls)),
-    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
-    path('load-table-data', tdl.load_table_data, name='load-table-data')
+    path('api/', include(('api.routers', 'api'), namespace='api')),
+    #path('load-table-data', tdl.load_table_data, name='load-table-data')
 ]
