@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from .router import user_router, api_router
 from rest_framework.authtoken import views
+from api.nlidb import DatabaseExtractor
 
 urlpatterns = [
     path('admin/', admin.site.urls),

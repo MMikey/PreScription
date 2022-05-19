@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class MedicalStaff(models.Model):
+class Staff(models.Model):
     staff_id = models.IntegerField(primary_key=True, default=0)
     name = models.CharField(max_length=50)
     salary = models.FloatField()
@@ -23,7 +23,7 @@ class Appointment(models.Model):
         unique_together = (('patient', 'staff'),)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, primary_key=True)
-    staff = models.ForeignKey(MedicalStaff, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     date_time = models.DateTimeField()
 
@@ -32,6 +32,6 @@ class Treatment(models.Model):
         unique_together = (('patient', 'staff'),)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, primary_key=True)
-    staff = models.ForeignKey(MedicalStaff, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     cost = models.FloatField()
     description = models.CharField(max_length=200)

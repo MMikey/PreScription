@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import MedicalStaff, Patient, Appointment, Treatment
+from .models import Staff, Patient, Appointment, Treatment
 
-class MedicalStaffSerializer(serializers.ModelSerializer):
+class StaffSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MedicalStaff
+        model = Staff
         fields = ('staff_id', 'name', 'salary', 'date_hired', 'is_working')
 
 class PatientSerializer(serializers.ModelSerializer):

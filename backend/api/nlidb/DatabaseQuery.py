@@ -1,6 +1,6 @@
 from sqlite3 import connect
-from nlidb.serializers import MedicalStaffSerializer, PatientSerializer, AppointmentSerializer, TreatmentSerializer
-from nlidb.models import MedicalStaff, Patient, Appointment, Treatment
+from nlidb.serializers import StaffSerializer, PatientSerializer, AppointmentSerializer, TreatmentSerializer
+from nlidb.models import Staff, Patient, Appointment, Treatment
 
 from rest_framework.response import Response
 
@@ -20,6 +20,7 @@ class DatabaseQuery:
             for row in cursor.fetchall()
         ]
     
+
     def selectmodel(self,data: list) -> Response:
     #
     # Selects the correct model based on table paramters
@@ -28,9 +29,10 @@ class DatabaseQuery:
         if ('patient_id' in data[0]):
             serializer = PatientSerializer(data, many=True)
         elif ('staff_id' in data[0]):
-            serializer = MedicalStaffSerializer(data, many=True) 
+            serializer = StaffSerializer(data, many=True) 
 
         return Response(serializer.data)
+    
     
     def query(self) -> Response:
         # create connection to database
