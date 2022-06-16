@@ -1,6 +1,8 @@
 # untitled_nlidb
 Final Year Project NLIDB
 
+## INSTALLATION
+Tested on linux and wsl
 ## Backend
 - Navigate to /backend
 - `python3 -m venv env`

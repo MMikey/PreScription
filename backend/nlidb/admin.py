@@ -9,10 +9,10 @@ class PatientsAdmin(admin.ModelAdmin):
     list_display = ('patient_id','name', 'DOB', 'NHS_num', 'BMI', 'admitted')
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('patient', 'staff', 'description', 'date_time')
+    list_display = ('patient', 'staff', 'date_time', 'treatment', 'description')
 
 class TreatmentAdmin(admin.ModelAdmin):
-    list_display = ('patient', 'staff', 'cost', 'description')
+    list_display = ('treatment_id', 'name', 'description', 'cost')
 
 
 admin.site.register(Staff, StaffAdmin)
