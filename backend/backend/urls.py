@@ -18,11 +18,9 @@ from django.urls import path, include
 
 from api.routers import user_router, api_router
 from rest_framework.authtoken import views
-from api.nlidb import TableDataLoader as tdl
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(api_router.urls)),
     path('api/', include(('api.routers', 'api'), namespace='api')),
-    #path('load-table-data', tdl.load_table_data, name='load-table-data')
 ]
