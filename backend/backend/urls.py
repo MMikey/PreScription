@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 from api.routers import api_router
-from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),

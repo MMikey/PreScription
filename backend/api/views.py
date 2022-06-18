@@ -22,6 +22,8 @@ class TranslationView(viewsets.ModelViewSet):
     def create(self, request):
         question_translator = SQLEncoder(request)
 
+        request = question_translator.encode_utterance()
+
         obj, created = Translation.objects.get_or_create(
             utterance=request.data['utterance'],
             sql_query=request.data['sql_query']
@@ -37,6 +39,7 @@ class TranslationView(viewsets.ModelViewSet):
         obj = get_object_or_404(self.queryset, pk=pk)
         query = obj.__getattribute__('sql_query')
 
+        
         dbq = DatabaseQuery(query)
         
         results_dict = dbq.query()

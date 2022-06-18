@@ -8,6 +8,7 @@ from django.db import connection
 class DatabaseQuery:
     def __init__(self, sql_query) -> None:
         self.__query__ = sql_query
+        print(sql_query)
 
     def dictfetchall(self, cursor) -> list:
     #
@@ -29,6 +30,8 @@ class DatabaseQuery:
             serializer = PatientSerializer(data, many=True)
         elif ('staff_id' in data[0]):
             serializer = StaffSerializer(data, many=True) 
+        elif ('treatment_id' in data[0]):
+            serializer = TreatmentSerializer(data,many=True)
 
         return Response(serializer.data)
     

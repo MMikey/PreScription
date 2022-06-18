@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TitleScreen from '../components/screens/titleScreen'
-import LoginScreen from '../components/screens/loginScreen'
+import HistoryScreen from '../components/screens/historyScreen'
 
 const HomeStack = createNativeStackNavigator()
 
@@ -14,7 +14,6 @@ class HomeStackScreen extends Component {
         }}
       >
         <HomeStack.Screen name='Title' component={TitleScreen} />
-        <HomeStack.Screen name='Login' component={LoginScreen} />
       </HomeStack.Navigator>
     )
   }

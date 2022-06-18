@@ -27,10 +27,13 @@ class SQLEncoder:
 
         self.construct()
 
-        # detokenize utterance and return sql
-        self.utterance = TreebankWordDetokenizer().detokenize(self.utterance)
         return Response(self.request.data)
 
+    def remove_stopwords(self):
+        tokens_without_sw = [word for word in self.utterance if not word in stopwords.words()]
+        return tokens_without_sw
+
+    
     def identify_keywords(self):
         with open('./api/nlidb_functions/tabledata.json', 'r') as f:
             data = json.load(f)
@@ -40,22 +43,14 @@ class SQLEncoder:
             for x in data.values():
                 for s in x['synonyms']:
                     if word == s:
-                        table_name = x['synonyms'][0]
+                        self.sql_props['table_name'] = x['synonyms'][0]
                         break
                 
                 for c in x['attributes']:
                     if word == c:
-                        attr = c
+                        self.sql_props['cond_attr'] = c
                         break
     
-    def clean_table_name(self, name) -> str:
-        name = name.lower()
-        if name[-1]  == 's':
-            name = name[:-1]
-        
-        self.__query_semantics__['table_name'] = name
-        return name
-
     def identify_WHERE(self):
         attr = self.sql_props['cond_attr'] 
         print('hi')

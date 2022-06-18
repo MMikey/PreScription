@@ -8,11 +8,11 @@
         "attributes": ["name", "salary", "date_hired", "BMI", "working"]
     },
     "treatment":{
-        "synonyms":["treatments", "doctors"],
+        "synonyms":["treatment","treatments", "doctors"],
         "attributes": ["name", "description", "cost"]
     },
     "appointment":{
-        "synonyms":[""],
+        "synonyms":["appointment"],
         "attributes":["patient", "staff", "date_time", "treatment","description"]
     }
 }
