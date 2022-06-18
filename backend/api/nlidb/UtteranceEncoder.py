@@ -15,6 +15,3 @@ class UtteranceEncoder:
         tokens_without_sw = [word for word in self.__statement_tokens__ if not word in stopwords.words()]
 
         self.__statement_tokens__ = TreebankWordDetokenizer().detokenize(tokens_without_sw)
-
-        handler500 = 'error'
-    

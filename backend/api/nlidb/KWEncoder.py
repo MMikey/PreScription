@@ -12,8 +12,16 @@ class KWEncoder(UtteranceEncoder):
 
         self.__query_semantics__ = {'operator': '*',
                                 'table_name': '',
-                                'conditional': ''
+                                'conditional': '',
+                                'value': ''
                                 }
+
+        self.__sql_templates__ = {
+            'template_one': 'SELECT {} FROM {} WHERE {} = 1',
+            'template_two': 'SELECT {} FROM {} WHERE {} LIKE {}',
+            'template_three': 'SELECT COUNT({}) FROM {}',
+            'default': 'SELECT {} FROM {}',
+        }
         
     def process(self) -> Response:
     #
@@ -27,23 +35,19 @@ class KWEncoder(UtteranceEncoder):
 
         return Response(self.__request__.data)
 
-    def clean_parameters(self):
-        if (self.__query_semantics__['table_name']):
-            pass
-
     def clean_table_name(self, name) -> str:
         name = name.lower()
         if name[-1]  == 's':
             name = name[:-1]
         
-        self.__query_semantics__['table_name'] = name
-        return name
+        return 'nlidb_' + name
 
 
     def identify_keywords(self) -> None:
     #
     # Extracts table name and table parameters from utterance
     #   
+        # Loops through corpus of db keywords to store as list
         corpus_root  = './api/nlidb/keywords'
         filelists = PlaintextCorpusReader(corpus_root, '.*')
         filelists.fileids()
@@ -59,15 +63,41 @@ class KWEncoder(UtteranceEncoder):
         tbl_name = TreebankWordDetokenizer().detokenize(tn_tokens)
         self.__query_semantics__['conditional'] = TreebankWordDetokenizer().detokenize(pn_tokens)
 
-        self.clean_table_name(tbl_name)
+        self.__query_semantics__['table_name'] = self.clean_table_name(tbl_name)
 
+    def identify_conditional_values(self):
+        pass
 
-    def construct_sql(self) -> None:
-        name = self.clean_table_name(self.__query_semantics__['table_name'])
-            
-        op = self.__query_semantics__['operator']
-        tn = 'nlidb_' + name
+    def select_template(self):
+        tn = self.__query_semantics__['table_name']
         cp = self.__query_semantics__['conditional']
 
-        self.__request__.data['sql_query'] = f'SELECT {op} FROM {tn} WHERE {cp} = 1'
+        if tn == 'nlidb_patient':
+                if cp == 'admitted':
+                    return self.__sql_templates__['template_one']
+        elif tn == 'nlidb_staff':
+                if cp == 'is_working':
+                    return self.__sql_templates__['template_one']
+                else: 
+                    return self.__sql_templates__['template_three']
+        elif tn == 'nlidb_appointment':
+                pass
+        elif tn == 'nlidb_treatment':
+                if cp == 'name':
+                    return self.__sql_templates__['template_two']
+
+        return self.__sql_templates__['default']
+
+        
+
+    def construct_sql(self) -> None:    
+        op = self.__query_semantics__['operator']
+        tn = self.__query_semantics__['table_name']
+        cp = self.__query_semantics__['conditional']
+        value = self.__query_semantics__['value']
+
+        template = self.select_template()
+
+        print(template)
+        self.__request__.data['sql_query'] = template.format(op,tn,cp)
 

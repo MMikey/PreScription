@@ -42,7 +42,7 @@ class TranslationView(viewsets.ModelViewSet):
         dbq = DatabaseQuery(query)
         
         results_dict = dbq.query()
-
+        print(results_dict)
         return results_dict
     
 

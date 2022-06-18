@@ -1,10 +1,11 @@
+
 from sqlite3 import connect
 from nlidb.serializers import StaffSerializer, PatientSerializer, AppointmentSerializer, TreatmentSerializer
 from nlidb.models import Staff, Patient, Appointment, Treatment
 
 from rest_framework.response import Response
 
-from django.db import connection, transaction
+from django.db import connection
 
 class DatabaseQuery:
     def __init__(self, sql_query) -> None:
@@ -40,7 +41,10 @@ class DatabaseQuery:
             cursor.execute(self.__query__)
 
             data = self.dictfetchall(cursor)
-
+            
+            if not data:
+                return Response('Table is Empty!')
+                
             return self.selectmodel(data)
 
         

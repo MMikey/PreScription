@@ -7,8 +7,8 @@ from nlidb.models import Staff, Patient, Appointment, Treatment
 
 def TableDataLoader():
     def save_to_file(self, table_data:dict  ):
-        open('table_data.json', 'x')
-        with open('table_data.json', 'w') as fp:
+        open('./keywords/table_data.json', 'x')
+        with open('./keywords/table_data.json', 'w') as fp:
             json.dump(table_data, fp)
 
 
