@@ -4,12 +4,12 @@ from .models import Staff, Patient, Appointment, Treatment
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = ('staff_id', 'name', 'salary', 'date_hired', 'is_working')
+        fields = ('staff_id', 'name', 'salary', 'date_hired', 'working')
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ('patient_id', 'name', 'DOB', 'NHS_num', 'BMI', 'admitted', 'ward_admitted')
+        fields = ('patient_id', 'name', 'DOB', 'NHS_num', 'BMI', 'admitted')
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:

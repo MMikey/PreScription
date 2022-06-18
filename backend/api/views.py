@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .nlidb.KWEncoder import KWEncoder
+from .nlidb_functions.SQLEncoder import SQLEncoder
+from .nlidb_functions.DatabaseQuery import DatabaseQuery 
 
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -7,7 +8,6 @@ from rest_framework.decorators import action
 
 from .serializers import TranslationSerializer
 from .models import Translation
-from .nlidb.DatabaseQuery import DatabaseQuery
 
 import logging
 from django.core.exceptions import * 
@@ -20,9 +20,9 @@ class TranslationView(viewsets.ModelViewSet):
     logger = logging.getLogger(__name__)
     
     def create(self, request):
-        question_translator = KWEncoder(request)
+        question_translator = SQLEncoder(request)
 
-        request = question_translator.process()
+        request = question_translator.encode_utterance()
 
         obj, created = Translation.objects.get_or_create(
             utterance=request.data['utterance'],
@@ -39,6 +39,7 @@ class TranslationView(viewsets.ModelViewSet):
         obj = get_object_or_404(self.queryset, pk=pk)
         query = obj.__getattribute__('sql_query')
 
+        
         dbq = DatabaseQuery(query)
         
         results_dict = dbq.query()

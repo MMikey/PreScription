@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import HomeStackScreen from './navigation/HomeStackScreen'
+import HistoryScreen from './components/screens/historyScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -17,6 +18,7 @@ class App extends Component {
           }}
         >
           <Tab.Screen name='Home' component={HomeStackScreen} />
+          <Tab.Screen name='History' component={HistoryScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     )

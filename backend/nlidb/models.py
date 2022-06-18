@@ -8,7 +8,7 @@ class Staff(models.Model):
     name = models.CharField(max_length=50)
     salary = models.FloatField()
     date_hired = models.DateField('date hired')
-    is_working = models.BooleanField()
+    working = models.BooleanField()
 
 class Patient(models.Model):
     patient_id = models.IntegerField(primary_key=True, default=0)

@@ -4,7 +4,8 @@ const COLORS = {
     background: '#B3D7DF',
     primaryFG: '#FFF',
     border: '#CCC',
-    container: '#F8F9F9'
+    container: '#F8F9F9',
+    nav:'#282A35'
 }
 
 const FONTS = {
@@ -14,7 +15,7 @@ const FONTS = {
 const BORDER = {
     borderWidth:1,
     borderColor:COLORS.border,
-    borderRadius:5
+    borderRadius:2
 }
 
 export { COLORS, FONTS, BORDER }

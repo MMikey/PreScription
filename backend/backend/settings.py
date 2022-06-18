@@ -27,8 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'api_user.User'
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'nlidb',
     'api',
-    'api.user'
 ]
+
+AUTH_USER_MODEL = 'auth.user'
 
 ############# rest_framework settings #####################
 REST_FRAMEWORK = {

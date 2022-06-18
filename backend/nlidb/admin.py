@@ -3,7 +3,7 @@ from .models import Staff, Patient, Appointment, Treatment
 # Register your models here.
 
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ('staff_id','name', 'salary', 'date_hired', 'is_working')
+    list_display = ('staff_id','name', 'salary', 'date_hired', 'working')
 
 class PatientsAdmin(admin.ModelAdmin):
     list_display = ('patient_id','name', 'DOB', 'NHS_num', 'BMI', 'admitted')
