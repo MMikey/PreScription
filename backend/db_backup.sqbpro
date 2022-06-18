@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/mikey/Documents/FinalYearProject/untitled_nlidb/backend/db.sqlite3" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2864"/><column_width id="4" width="0"/></tab_structure><tab_browse><current_table name="0,0:"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">insert into nlidb_staff (name, working, date_hired, salary) values ('Cobb Tomasz', false, '2003-12-29 15:50:24', 38721.49);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Libbey Clemencet', true, '1982-01-28 02:13:44', 25372.27);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Bendicty Doidge', true, '1986-01-05 23:53:27', 38468.38);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Arin Bligh', true, '2006-11-22 12:36:51', 62980.78);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Dedie Escoffrey', false, '2005-07-22 06:57:27', 55979.62);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Conroy Fairweather', false, '1997-11-28 18:07:34', 30985.46);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Karrie Beeching', true, '2011-06-09 21:47:55', 34468.52);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Elvera O''Sharry', true, '1981-05-31 00:09:35', 28731.42);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Murry Fattorini', false, '1991-10-21 14:37:12', 23563.25);
+insert into nlidb_staff (name, working, date_hired, salary) values ('Phillie Duchatel', false, '2018-10-13 18:55:49', 50237.8);</sql><current_tab id="0"/></tab_sql></sqlb_project>

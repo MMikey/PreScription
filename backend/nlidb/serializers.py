@@ -9,7 +9,7 @@ class StaffSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ('patient_id', 'name', 'DOB', 'NHS_num', 'BMI', 'admitted', 'ward_admitted')
+        fields = ('patient_id', 'name', 'DOB', 'NHS_num', 'BMI', 'admitted')
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:

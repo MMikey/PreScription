@@ -21,38 +21,54 @@ class SQLEncoder:
 
     def encode_utterance(self):
         # first stopwords are removed
-        utterance = self.remove_stopwords()
+        self.utterance = self.remove_stopwords()
 
-        utterance = self.identify_keywords()
+        self.identify_keywords()
+
+        self.construct()
 
         # detokenize utterance and return sql
-        utterance = TreebankWordDetokenizer().detokenize(utterance)
-        self.request.data['sql_query'] = utterance
+        self.utterance = TreebankWordDetokenizer().detokenize(self.utterance)
         return Response(self.request.data)
 
     def identify_keywords(self):
         with open('./api/nlidb_functions/tabledata.json', 'r') as f:
             data = json.load(f)
-        
-
-        print(data.keys())
+    
         # first get table name from json file
-        table_name = [word for word in self.utterance if word in data.keys()]
-        self.sql_props['table_name'] = table_name
+        for word in self.utterance:
+            for x in data.values():
+                for s in x['synonyms']:
+                    if word == s:
+                        table_name = x['synonyms'][0]
+                        break
+                
+                for c in x['attributes']:
+                    if word == c:
+                        attr = c
+                        break
+    
+    def clean_table_name(self, name) -> str:
+        name = name.lower()
+        if name[-1]  == 's':
+            name = name[:-1]
+        
+        self.__query_semantics__['table_name'] = name
+        return name
 
-        # then get column name to be used as conditional
-        json_data = data
-        attr = [word for word in self.utterance if word in json_data.values()]
-        self.sql_props['cond_attr'] = attr
+    def identify_WHERE(self):
+        attr = self.sql_props['cond_attr'] 
+        print('hi')
+        if attr == 'admitted' or attr == 'working':
+            return ' WHERE '+ attr + '=1'
 
-
-    def remove_stopwords(self):
-        tokens_without_sw = [word for word in self.utterance \
-            if not word in stopwords.words('english')]
-
-        return tokens_without_sw
+        return ''
 
     def construct(self):
-        pass
+        column = self.sql_props['column']
+        table_name = 'nlidb_' + self.sql_props['table_name']
+        WHERE_clause = self.identify_WHERE()
+
+        self.request.data['sql_query'] = f'SELECT {column} FROM {table_name}' + WHERE_clause
 
     
