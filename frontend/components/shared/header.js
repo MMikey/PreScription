@@ -17,7 +17,7 @@ class Header extends Component {
   render () {
     return (
       <View style={header.container}>
-          <Text style={header.title}>An Untitled Natural Language Interface to a Database</Text>
+          <Text style={header.title}>PreScription: A Natural Language Interface to a Database</Text>
       </View>
     )
   }

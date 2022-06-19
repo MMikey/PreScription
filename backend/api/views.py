@@ -42,7 +42,10 @@ class TranslationView(viewsets.ModelViewSet):
         
         dbq = DatabaseQuery(query)
         
-        results_dict = dbq.query()
+        try:
+            results_dict = dbq.query()
+        except Exception as e:
+            return Response({'error': f'{str(e)}'})
 
         return results_dict
     

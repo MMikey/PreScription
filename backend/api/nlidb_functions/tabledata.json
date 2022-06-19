@@ -4,11 +4,11 @@
         "attributes": ["name", "DOB", "NHS_num", "BMI", "admitted"]
     },
     "staff":{
-        "synonyms":["staff", "doctors"],
+        "synonyms":["staff", "doctors", "nurses", "employees", "workforce", "personnel"],
         "attributes": ["name", "salary", "date_hired", "BMI", "working"]
     },
     "treatment":{
-        "synonyms":["treatment","treatments", "doctors"],
+        "synonyms":["treatment","treatments", "care", "medications"],
         "attributes": ["name", "description", "cost"]
     },
     "appointment":{

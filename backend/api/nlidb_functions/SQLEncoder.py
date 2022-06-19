@@ -7,14 +7,15 @@ from nltk.tokenize.treebank import TreebankWordDetokenizer
 import json
 
 class SQLEncoder:
-    sql_props = {
+    
+
+    def __init__(self, _request) -> None:
+        self.sql_props = {
         'table_name': '',
         'column': '*',
         'cond_attr': '',
         'cond_value': ''
     }
-
-    def __init__(self, _request) -> None:
         # Tokenize the utterance for later
         self.utterance = word_tokenize(_request.data['utterance'])
         self.request = _request
