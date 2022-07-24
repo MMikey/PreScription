@@ -24,6 +24,6 @@ Tested on debian11, Arch and wsl(ubuntu)
 
 
 ## Structure
-Algorithm can be found in `backend/api/nlidb_functions`
-Database setup can be found in `backend/NLIDB`
-UI Screens can be found in `frontend/components/`
+- Algorithm can be found in `backend/api/nlidb_functions`
+- Database setup can be found in `backend/NLIDB`
+- UI Screens can be found in `frontend/components/`
