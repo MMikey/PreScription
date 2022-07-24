@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, TouchableOpacity, FlatList, ScrollView} from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { View, ScrollView } from 'react-native'
 
-import { StyleSheet } from 'react-native'
-import { main, response, questionInput } from '../../styles/mainStyle'
+import { main, response } from '../../styles/mainStyle'
 
 import Header from '../shared/header'
 
-import { Table, Row } from 'react-native-table-component'
+import { Button, Table } from 'react-bootstrap'
+
 import Moment from 'moment'
+
+import { useFocusEffect } from '@react-navigation/native'
 
 class HistoryScreen extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class HistoryScreen extends Component {
     this.state = {
       nlQuery: '',
       results: [],
-      tableHeaders: ['Natural Language Question', 'SQL', 'Date Posted']
+      tableHeaders: ['ID', 'Natural Language Question', 'SQL', 'Date Posted']
     }
   }
 
@@ -27,7 +28,9 @@ class HistoryScreen extends Component {
 
   componentDidMount() {
     this.showQuestions()
+    this.props.navigation.addListener('willFocus', this.showQuestions())
   }
+
 
   deleteQuestions = async (id) => {
     return fetch('http://localhost:8000/api/question/' + id, {
@@ -36,16 +39,16 @@ class HistoryScreen extends Component {
         'Content-Type': 'application/json',
       }
     })
-    .then((response) => {
-      if ((response.status) === 200){
-        return response.json()
-      } else {
-        throw new Error('oops something went wrong!')
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((response) => {
+        if ((response.status) === 200) {
+          return response.json()
+        } else {
+          throw new Error('oops something went wrong!')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   showQuestions = async () => {
@@ -56,9 +59,9 @@ class HistoryScreen extends Component {
       }
     })
       .then((response) => {
-        if (response.status === 200){
+        if (response.status === 200) {
           return response.json()
-        } else if (response.status === 401){
+        } else if (response.status === 401) {
           this.props.navigation.navigate('Login')
         }
       })
@@ -78,9 +81,11 @@ class HistoryScreen extends Component {
     for (let i = 0; i < results.length; i++) {
       let item = results[i]
       let row = Object.values(item)
+     
+      Moment.locale('en')
+      row[row.length-1] = Moment(row[row.length-1]).format('d MMM hh:mm')
       tableData.push(row)
     }
-
     return tableData
   }
 
@@ -90,27 +95,33 @@ class HistoryScreen extends Component {
         <Header></Header>
 
         <ScrollView style={response.container}>
-          
-        <Table style={StyleSheet.flatten(response.container)}>
 
-              <Row
-                data={this.state.tableHeaders}
-                style={StyleSheet.flatten(response.itemHeader)}
-                textStyle={StyleSheet.flatten(response.headTxt)}
-              />
-
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                {this.state.tableHeaders.map((data, index) => (
+                  <th>{data}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
               {
                 this.getTableData(this.state.results).map((rowData, index) => (
-                    <Row
-                      data={rowData.splice(1)}
-                      style={[StyleSheet.flatten(response.row), index % 2 && { backgroundColor: '#F7F6E7' }]}
-                    />
+                  <tr>
+                    {rowData.map((data,columnInd) => (
+                          <td>{data}</td>
+                        ))}
+                  </tr>
                 ))
               }
 
-            </Table>
+            </tbody>
+          </Table>
+          <div className='align-items-center'>
+            <Button onClick={() => this.deleteQuestions()} variant='danger'> Delete All</Button>
+          </div>
         </ScrollView>
-        
+
       </View>
     )
   }

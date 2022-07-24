@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
-import { View, Button, Text } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { View, Text } from 'react-native'
 
 import { header } from '../../styles/mainStyle'
 
 class Header extends Component {
   constructor (props) {
     super(props)
-
-    this.state = {
-      token: ''
-    }
   }
 
 

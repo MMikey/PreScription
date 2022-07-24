@@ -4,7 +4,7 @@ import { COLORS, BORDER, FONTS } from "./common";
 const main = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.primaryFG
+        backgroundColor: COLORS.primaryBG
     },
 
     response: {
@@ -15,7 +15,7 @@ const main = StyleSheet.create({
 
 const header = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.nav,
+        backgroundColor: COLORS.primary,
         width:'auto',
         padding:5,
     },
@@ -24,38 +24,33 @@ const header = StyleSheet.create({
         fontSize:25,
         fontStyle:FONTS.primary,
         color:'white',
-        textAlign:'center'
+        marginLeft:1,
     }
 })
 
 const introduction = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.primary,
-        padding:1,
-        margin:1,
-
-        borderWidth: BORDER.borderWidth,
-        borderColor: BORDER.borderColor,
-        borderRadius: BORDER.borderRadius,
-        width:'90%',
         alignSelf:"center",
         textAlign:'center'
     },
     head :{
         fontSize: 23,
         fontWeight: 'bold',
-        textAlign:'center'
+        textAlign:'center',
+        marginTop:5,
+        marginBottom:5
     },
     body: {
-        fontSize: 15
+        fontSize: 15,
+        marginBottom:5
     }
 })
 
 const questionInput = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.primaryBG,
         padding: 1,
-        margin: 1,
+        margin: 5,
 
         borderWidth: BORDER.borderWidth,
         borderColor: BORDER.borderColor,
@@ -63,7 +58,6 @@ const questionInput = StyleSheet.create({
         
         flexDirection: "row",
         alignSelf:"center",
-        width:'90%'
     },
 
     input: {
@@ -84,47 +78,14 @@ const questionInput = StyleSheet.create({
 
 const response = StyleSheet.create({
     container: {
-        flex: 1,
         alignSelf: 'center',
-        backgroundColor: COLORS.primary,
-        width:'90%'
-    },
-
-    table: {
-        margin:2,
-    },
-
-    row: {
-        height:'auto',
+        backgroundColor: COLORS.secondaryBG,
         width:'auto',
-        flexDirection:'row'
+        height:'auto'
     },
-
-    itemHeader: {
-        backgroundColor: COLORS.primary,
-        flex: 1,
-        height: 'auto',
-        
-        borderWidth: BORDER.borderWidth,
-        borderColor: BORDER.borderColor,
-        borderRadius: BORDER.borderRadius,
-    },
-
-    tableBorder: {
-        borderWidth: BORDER.borderWidth,
-        borderColor: BORDER.borderColor
-    },
-
-    headTxt: {
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-
-    rowTxt: {
-        margin: 6,
-        color: 'black',
-        fontSize:15,
-        flex:1
+    empty: {
+        alignSelf:'flex-end',
+        justifyContent:'flex-end'
     }
 })
 export { main, questionInput, response, header, introduction}

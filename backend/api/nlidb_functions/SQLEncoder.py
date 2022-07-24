@@ -54,7 +54,6 @@ class SQLEncoder:
     
     def identify_WHERE(self):
         attr = self.sql_props['cond_attr'] 
-        print('hi')
         if attr == 'admitted' or attr == 'working':
             return ' WHERE '+ attr + '=1'
 

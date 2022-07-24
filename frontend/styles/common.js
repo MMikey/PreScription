@@ -2,7 +2,8 @@ const COLORS = {
     primary: '#79AEC8',
     secondary: '#417690',
     background: '#B3D7DF',
-    primaryFG: '#FFF',
+    primaryBG: '#F6F6F6',
+    secondaryBG: '#F6F6F6',
     border: '#CCC',
     container: '#F8F9F9',
     nav:'#282A35'

@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, TouchableOpacity, ScrollView, TouchableHighlightBase } from 'react-native'
+import { Text, View, TextInput, ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { Table, Row } from 'react-native-table-component'
 import { main, response, questionInput, introduction } from '../../styles/mainStyle'
 
 import Header from '../shared/header'
+import Info from '../shared/info'
+import { Container, Table, Button, Alert, Card } from 'react-bootstrap'
 import { StyleSheet } from "react-native";
 
-import { Moment } from 'moment'
 
 
 class TitleScreen extends Component {
@@ -19,7 +19,9 @@ class TitleScreen extends Component {
       nlQuery: '',
       results: [],
       sqlresults: [],
-      tableHeaders: []
+      tableHeaders: [],
+      error: false,
+      errorMsg: 'Please Enter A Natural Language Query to get started'
     }
   }
 
@@ -42,6 +44,9 @@ class TitleScreen extends Component {
         }
       })
       .then((responseJSON) => {
+        if ('error' in responseJSON) {
+          throw new Error(responseJSON['error'])
+        }
         this.setState({
           sqlresults: responseJSON
         })
@@ -51,13 +56,21 @@ class TitleScreen extends Component {
         })
 
       })
-      .catch((error) => {
-        console.log(error)
+      .catch((err) => {
+        this.setState({
+          errorMsg: err.message,
+          error: true
+        })
+        console.log(this.state.errorMsg)
       })
   }
 
 
   postQuestion = async () => {
+    this.setState({
+      errorMsg: '',
+      error: false
+    })
 
     return fetch('http://localhost:8000/api/question/', {
       method: 'POST',
@@ -74,11 +87,10 @@ class TitleScreen extends Component {
         }
       })
       .then((responseJSON) => {
-        this.setState({ //basically you can do all 
+        this.setState({
           results: responseJSON
         })
         this.processQuery(responseJSON.id)
-        console.log(responseJSON.id)
       })
       .catch((error) => {
         console.log(error)
@@ -105,60 +117,67 @@ class TitleScreen extends Component {
 
 
   render() {
+
     return (
       <View style={main.container}>
         <Header></Header>
-        <View style={introduction.container}>
-          <Text style={introduction.head}>Welcome!</Text>
-            <Text style={introduction.body}>
-              To start you can ask questions about patients, staff and treatments. Current questions available:{"\n"}
-              "Which patients are currently admitted?"{"\n"}
-              "Which staff are currently working?"{"\n"}
-              "Show me a list of all patients"{"\n"}
-              "Show me a list of all staff"{"\n"}
-              "Show me a list of all treatments"{"\n"}
-              To Get started, please input a natural language question below.</Text>
-        </View>
+        <Card border='light' className='text-center m-2'>
+          <Card.Body>
 
-        <View style={questionInput.container}>
-          <TextInput
-            placeholder='Question'
-            style={questionInput.input}
-            onChangeText={(nlQuery) => this.setState({ nlQuery })}
-            value={this.state.nlQuery}
-          />
-          <TouchableOpacity
-            onPress={() => this.postQuestion()}
-            style={questionInput.button}>
-            <Text>Enter</Text>
-          </TouchableOpacity>
-        </View>
+            <Card.Title> Welcome!</Card.Title>
+            <Info />
+            <Card.Text>
+              Enter a Natural Language Query to Begin
+            </Card.Text>
+    
 
-        <View style={response.container}>
-          <ScrollView bounces={false}>
-
-            <Table
-              style={StyleSheet.flatten(response.container)}
-            >
-              <Row
-                data={this.state.tableHeaders}
-                style={StyleSheet.flatten(response.itemHeader)}
-                textStyle={StyleSheet.flatten(response.headTxt)}
+          <View style={questionInput.container}>
+            <TextInput
+              placeholder='Natural Language Question'
+              style={questionInput.input}
+              onChangeText={(nlQuery) => this.setState({ nlQuery })}
+              value={this.state.nlQuery}
               />
+            <Button
+              onClick={() => this.postQuestion()}
+              variant='primary'
+              >Enter</Button>
+          </View>
+        </Card.Body>
+        </Card>
 
-              {
-                this.getTableData(this.state.sqlresults).map((rowData, index) => (
-                  <Row
-                    data={rowData}
-                    style={[StyleSheet.flatten(response.row), index % 2 && { backgroundColor: '#F7F6E7' }]}
-                  />
-                ))
-              }
+        <ScrollView style={response.container}>
+          {(this.state['results'].length == 0 || (this.state.error == true))
+            ?
+            <View style={response.empty}>
+              <Alert variant='warning'>
+                {this.state.errorMsg}
+              </Alert>
+            </View>
+            :
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  {this.state.tableHeaders.map((data, index) => (
+                    <th>{data}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.getTableData(this.state.sqlresults).map((rowData, rowIndex) => (
+                    <tr>
+                      {rowData.map((data, columnInd) => (
+                        <td key={columnInd}>{data}</td>
+                      ))}
+                    </tr>
+                  ))
+                }
+              </tbody>
 
             </Table>
-
-          </ScrollView>
-        </View>
+          }
+        </ScrollView>
 
       </View>
     )
