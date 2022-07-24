@@ -1,4 +1,4 @@
-# untitled_nlidb
+# PreScription
 Final Year Project NLIDB
 
 ## INSTALLATION
@@ -21,3 +21,9 @@ Tested on debian11, Arch and wsl(ubuntu)
 - Navigate to /frontend
 - `npm install`
 - `expo start`
+
+
+## Structure
+Algorithm can be found in `backend/api/nlidb_functions`
+Database setup can be found in `backend/NLIDB`
+UI Screens can be found in `frontend/components/`
